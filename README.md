@@ -81,11 +81,6 @@ This project comes with various setup scripts to support automation, especially
 during maintanence or to scale the entire project.  The following files are the
 setupfiles along with a brief explanation:
 
-* **`dev/setup.sql`:** Drops test and dev databases, and then reinitializes
-the datbase.
-
-  * Usage: `$ cat dev/setup.sql | mysql -uroot -p`
-
 * **`setup_mysql_dev.sql`:** initialiezs dev database with mysql for testing
 
   * Usage: `$ cat setup_mysql_dev.sql | mysql -uroot -p`
