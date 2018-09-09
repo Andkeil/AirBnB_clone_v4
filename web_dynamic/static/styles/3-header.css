@@ -14,9 +14,11 @@ header {
 }
 div#api_status {
         background-color: #cccccc;
-	position: absolute;
+	border-radius: 50%;
+/*	position: absolute; */
+	float: right;
 	right: 30px;
-	min-width: 60px;
+	min-width: 40px;
 	text-align: center;
 }
 #api_status.available {
