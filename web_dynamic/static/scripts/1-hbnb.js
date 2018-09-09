@@ -18,19 +18,18 @@ $(document).ready(function () {
     if (this.checked) {
       idList.push(this.getAttribute('data-id'));
       console.log(idList);
-/*    	    for (let i = 0; i < id_list.length; i++) {
-		if (i = 0) {
-		    $("div", "h4").text(id_list[i]);
+    	    for (let i = 0; i < idList.length; i++) {
+		if (i === 0) {
+		    $("div.amenities h4").text(idList[i]);
 		} else {
-		    $("div", "h4").append(id_list[i]);
+		    $("div.amenities h4").append(idList[i]);
 		    }
 	 }
-*/
+
     }
     if (!this.checked) {
       rmID(idList, this.getAttribute('data-id'));
       console.log(idList);
     }
   });
-  $('div', 'h4').text('goodluck');
 });
