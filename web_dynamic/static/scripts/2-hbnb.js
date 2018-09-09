@@ -1,3 +1,4 @@
+#!/usr/bin/node
 $(document).ready(function () {
   let amenityDict = {};
   $('input[type=checkbox]').change(function () {
