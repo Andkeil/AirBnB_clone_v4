@@ -1,4 +1,3 @@
-#!/usr/bin/node
 $(document).ready(function () {
   let amenityDict = {};
   $('input[type=checkbox]').change(function () {
@@ -26,12 +25,9 @@ $(document).ready(function () {
   });
 });
 const url = 'http://0.0.0.0:5001/api/v1/status/';
-const request = require('request');
 
-request(url, (error, response) => {
-  if (error) {
-    console.log(error)
-  } else if (response.statusCode === 200) {
+$.get(url, (data) => {
+    if (data.status === 'OK') {
     $('DIV#api_status').addclass('available')
   } else {
     $('DIV#api_status').removeclass('available')
