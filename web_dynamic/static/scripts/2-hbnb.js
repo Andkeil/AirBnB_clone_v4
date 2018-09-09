@@ -23,13 +23,15 @@ $(document).ready(function () {
         $("div.amenities h4").empty();
       };
   });
-});
-const url = 'http://0.0.0.0:5001/api/v1/status/';
 
-$.get(url, (data) => {
-    if (data.status === 'OK') {
+
+$.get("http://0.0.0.0:5001/api/v1/status/", function (data) {
+    console.log(data);
+/*    if (status === 'OK') {
     $('DIV#api_status').addclass('available')
   } else {
     $('DIV#api_status').removeclass('available')
-  };
+  }; */
+});
+
 });
