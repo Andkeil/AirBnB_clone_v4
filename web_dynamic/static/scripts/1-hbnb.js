@@ -1,35 +1,26 @@
 $(document).ready(function () {
-  function rmID (arr) {
-    let what;
-    let a = arguments;
-    let L = a.length;
-    let ax;
-    while (L > 1 && arr.length) {
-      what = a[--L];
-      while ((ax = arr.indexOf(what)) !== -1) {
-        arr.splice(ax, 1);
-      }
-    }
-    return arr;
-  }
-
-  let idList = [];
+  let amenityDict = {};
   $('input[type=checkbox]').change(function () {
     if (this.checked) {
-      idList.push(this.getAttribute('data-id'));
-      console.log(idList);
-    	    for (let i = 0; i < idList.length; i++) {
-		if (i === 0) {
-		    $("div.amenities h4").text(idList[i]);
-		} else {
-		    $("div.amenities h4").append(idList[i]);
-		    }
-	 }
-
+      amenityDict[this.getAttribute('data-id')] = this.getAttribute('data-name');
     }
-    if (!this.checked) {
-      rmID(idList, this.getAttribute('data-id'));
-      console.log(idList);
+    else if (!this.checked) {
+      delete amenityDict[this.getAttribute('data-id')];
     }
+      let i = 0;
+      let string = "";
+      Object.keys(amenityDict).forEach(function (key) {
+	if (i === 0) {
+	  string += amenityDict[key];
+	} else {
+	  string += ", ";
+	  string += amenityDict[key];
+	}
+	i++;
+        $("div.amenities h4").text(string);
+      });
+      if (!Object.keys(amenityDict).length) {
+        $("div.amenities h4").empty();
+      }; 
   });
 });
