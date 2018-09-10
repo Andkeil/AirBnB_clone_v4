@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $.get("http://172.31.54.208:40228/api/v1/status/", function (data) {
+  $.get("http://0.0.0.0:5001/api/v1/status/", function (data) {
     console.log(data.status);
     if (data.status === 'OK') {
     $('DIV#api_status').addClass('available')
@@ -33,21 +33,39 @@ $(document).ready(function () {
   });
 
   let ajaxRequest = $.ajax({
-      type: 'POST', 
-      url: 'http://172.31.54.208:40228/api/v1/places_search/',
+      type: 'POST',
+      url: 'http://0.0.0.0:5001/api/v1/places_search/',
       data: JSON.stringify({}),
       contentType: 'application/json',
-});
-    let searchDict = {};
-    ajaxRequest.done(function(msg){
-	searchDict = msg;
-	Object.keys(searchDict).forEach(function (key) {
-	    console.log(key);
-	    console.log(searchDict[key]);
-	});
-});
-    ajaxRequest.fail(function(jqXHR, status){console.log(jqXHR)});
+      success: function(data) {
+	for (let i = 0; i < data.length; i++) {
+	  let article = $('<article>');
 
+	  let title = $('<div/>', {class: 'title'}).appendTo(article);
+	  $('<h2/>', {text: data[i]['name']}).appendTo(title);
+	  $('<div/>', {class: 'price_by_night', text: '$' + data[i].price_by_night}).appendTo(title);
 
+	  let infoBox = $('<div/>', {class: 'infomation'}).appendTo(article);
+	  let numGuests = $('<div/>', {class: 'max_guest'}).appendTo(article);
+	  let numRooms = $('<div/>', {class: 'number_rooms'}).appendTo(article);
+	  let numBaths = $('<div/>', {class: 'number_bathrooms'}).appendTo(article);
 
+	  $('<i/>', {class: 'fa fa-users fa-3x'}).appendTo(numGuests);
+	  $('<br/>').appendTo(numGuests);
+	  $('<div/>', {text: data[i]['max_guest'] + ' Guests'}).appendTo(numGuests);
+
+	  $('<i/>', {class: 'fa fa-bed fa-3x'}).appendTo(numRooms);
+          $('<br/>').appendTo(numRooms);
+          $('<div/>', {text: data[i]['number_rooms'] + ' Bedrooms'}).appendTo(numRooms);
+
+	  $('<i/>', {class: 'fa fa-bath fa-3x'}).appendTo(numBaths);
+          $('<br/>').appendTo(numBaths);
+          $('<div/>', {text: data[i]['number_bathrooms'] + ' Bathroom'}).appendTo(numBaths);
+
+	  let user = $('<div/>', {class: 'user'});
+
+	  $('.places').append(article);
+	}
+      }
+  });
 });
