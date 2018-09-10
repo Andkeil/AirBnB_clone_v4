@@ -45,10 +45,13 @@ $(document).ready(function () {
 	  $('<h2/>', {text: data[i]['name']}).appendTo(title);
 	  $('<div/>', {class: 'price_by_night', text: '$' + data[i].price_by_night}).appendTo(title);
 
-	  let infoBox = $('<div/>', {class: 'infomation'}).appendTo(article);
-	  let numGuests = $('<div/>', {class: 'max_guest'}).appendTo(article);
-	  let numRooms = $('<div/>', {class: 'number_rooms'}).appendTo(article);
-	  let numBaths = $('<div/>', {class: 'number_bathrooms'}).appendTo(article);
+	  let infoBox = $('<div/>', {class: 'information'}).appendTo(article);
+	  let numGuests = $('<div/>', {class: 'max_guest'}).appendTo(infoBox);
+	  let numRooms = $('<div/>', {class: 'number_rooms'}).appendTo(infoBox);
+	  let numBaths = $('<div/>', {class: 'number_bathrooms'}).appendTo(infoBox);
+
+	  $('<br/>').appendTo(article);
+	  $('<div/>', {class: 'description', text: data[i]['description']}).appendTo(article);
 
 	  $('<i/>', {class: 'fa fa-users fa-3x'}).appendTo(numGuests);
 	  $('<br/>').appendTo(numGuests);
@@ -61,8 +64,6 @@ $(document).ready(function () {
 	  $('<i/>', {class: 'fa fa-bath fa-3x'}).appendTo(numBaths);
           $('<br/>').appendTo(numBaths);
           $('<div/>', {text: data[i]['number_bathrooms'] + ' Bathroom'}).appendTo(numBaths);
-
-	  let user = $('<div/>', {class: 'user'});
 
 	  $('.places').append(article);
 	}
