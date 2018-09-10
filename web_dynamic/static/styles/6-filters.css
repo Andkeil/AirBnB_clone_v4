@@ -57,6 +57,9 @@
 .container .filters h4 {
 	font-weight: 400;
 	font-size: 14px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 	margin: 7px 0 3px 40px;
 }
 
