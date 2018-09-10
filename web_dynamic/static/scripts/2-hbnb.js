@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $.get("http://172.31.54.208:40228/api/v1/status/", function (data) {
+  $.get("http://34.206.234.184:40228/api/v1/status/", function (data) {
     console.log(data.status);
     if (data.status === 'OK') {
     $('DIV#api_status').addClass('available')
