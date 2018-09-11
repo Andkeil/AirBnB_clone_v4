@@ -7,6 +7,9 @@ $(document).ready(function () {
       $('DIV#api_status').removeClass('available');
     }
   });
+
+  loadListings({});
+
   let amenityDict = {};
   $('input[type=checkbox]').change(function () {
     if (this.checked) {
@@ -31,41 +34,47 @@ $(document).ready(function () {
     }
   });
 
-  $.ajax({
-    type: 'POST',
-    url: 'http://0.0.0.0:5001/api/v1/places_search/',
-    data: JSON.stringify({}),
-    contentType: 'application/json',
-    success: function (data) {
-      for (let i = 0; i < data.length; i++) {
-        let article = $('<article>');
+  function loadListings (listings) {
+    $.ajax({
+      type: 'POST',
+      url: 'http://0.0.0.0:5001/api/v1/places_search/',
+      data: JSON.stringify(listings),
+      contentType: 'application/json',
+      success: function (data) {
+        for (let i = 0; i < data.length; i++) {
+          let article = $('<article>');
 
-        let title = $('<div/>', {class: 'title'}).appendTo(article);
-        $('<h2/>', {text: data[i]['name']}).appendTo(title);
-        $('<div/>', {class: 'price_by_night', text: '$' + data[i].price_by_night}).appendTo(title);
+          let title = $('<div/>', {class: 'title'}).appendTo(article);
+          $('<h2/>', {text: data[i]['name']}).appendTo(title);
+          $('<div/>', {class: 'price_by_night', text: '$' + data[i].price_by_night}).appendTo(title);
 
-        let infoBox = $('<div/>', {class: 'information'}).appendTo(article);
-        let numGuests = $('<div/>', {class: 'max_guest'}).appendTo(infoBox);
-        let numRooms = $('<div/>', {class: 'number_rooms'}).appendTo(infoBox);
-        let numBaths = $('<div/>', {class: 'number_bathrooms'}).appendTo(infoBox);
+          let infoBox = $('<div/>', {class: 'information'}).appendTo(article);
+          let numGuests = $('<div/>', {class: 'max_guest'}).appendTo(infoBox);
+          let numRooms = $('<div/>', {class: 'number_rooms'}).appendTo(infoBox);
+          let numBaths = $('<div/>', {class: 'number_bathrooms'}).appendTo(infoBox);
 
-        $('<br/>').appendTo(article);
-        $('<div/>', {class: 'description', html: $.parseHTML(data[i]['description'])}).appendTo(article);
+          $('<br/>').appendTo(article);
+          $('<div/>', {class: 'description', html: $.parseHTML(data[i]['description'])}).appendTo(article);
 
-        $('<i/>', {class: 'fa fa-users fa-3x'}).appendTo(numGuests);
-        $('<br/>').appendTo(numGuests);
-        $('<div/>', {text: data[i]['max_guest'] + ' Guests'}).appendTo(numGuests);
+          $('<i/>', {class: 'fa fa-users fa-3x'}).appendTo(numGuests);
+          $('<br/>').appendTo(numGuests);
+          $('<div/>', {text: data[i]['max_guest'] + ' Guests'}).appendTo(numGuests);
 
-        $('<i/>', {class: 'fa fa-bed fa-3x'}).appendTo(numRooms);
-        $('<br/>').appendTo(numRooms);
-        $('<div/>', {text: data[i]['number_rooms'] + ' Bedrooms'}).appendTo(numRooms);
+          $('<i/>', {class: 'fa fa-bed fa-3x'}).appendTo(numRooms);
+          $('<br/>').appendTo(numRooms);
+          $('<div/>', {text: data[i]['number_rooms'] + ' Bedrooms'}).appendTo(numRooms);
 
-        $('<i/>', {class: 'fa fa-bath fa-3x'}).appendTo(numBaths);
-        $('<br/>').appendTo(numBaths);
-        $('<div/>', {text: data[i]['number_bathrooms'] + ' Bathroom'}).appendTo(numBaths);
+          $('<i/>', {class: 'fa fa-bath fa-3x'}).appendTo(numBaths);
+          $('<br/>').appendTo(numBaths);
+          $('<div/>', {text: data[i]['number_bathrooms'] + ' Bathroom'}).appendTo(numBaths);
 
-        $('.places').append(article);
+          $('.places').append(article);
+        }
       }
-    }
+    }); // Closes ajax call
+  } // Closes function loadlisting
+  $('.filters button').click(function () {
+    $('article').remove();
+    loadListings({'amenities': Object.keys(amenityDict)});
   });
 });
